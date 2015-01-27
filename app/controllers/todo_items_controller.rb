@@ -8,20 +8,18 @@ class TodoItemsController < ApplicationController
   end
 
   def create
-    puts '*' * 20
-    puts params
-    puts '*' * 20
-
     @todo = TodoItem.new(todo_items_params)
-      if @todo.save
-        respond_to do |format|
-          format.json { render json: @todo, staus: :created, message: "Success"}
-          format.html { redirect_to todo_items_path, :notice 'Successfully Created!' }
-      else
-        respond_to do |format|
-          format.json { render json: @todo.errors, staus: :created, message: "Success"}
-          format.html { redirect_to :back :alert 'Error Occured!' }
+    if @todo.save
+      respond_to do |format|
+        format.json { render json: @todo, status: :created, message: "Success" }
+        format.html { redirect_to todo_items_path, notice: 'Successfully Created!' }
       end
+    else
+      respond_to do |format|
+        format.json { render json: @todo.errors, staus: :created, message: "Success"}
+        format.html { redirect_to :back, alert: 'Error Occured!' }
+      end
+    end
   end
 
   def show
